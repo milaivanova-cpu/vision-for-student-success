@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NWT — Визия за ученика</title>
+<style>
+:root{--bg:#ffffff;--bg2:#F7F6F2;--border:rgba(0,0,0,0.12);--text:#1a1a18;--text2:#5F5E5A;--text3:#888780;--r:10px;--rs:6px}
+@media(prefers-color-scheme:dark){:root{--bg:#1C1C1A;--bg2:#252523;--border:rgba(255,255,255,0.1);--text:#E8E6DC;--text2:#B4B2A9;--text3:#888780}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem 4rem}
+.wrap{max-width:680px;margin:0 auto}
+h1{font-size:1.2rem;font-weight:500;color:var(--text);margin-bottom:.35rem;text-align:center}
+.sub{font-size:.8rem;color:var(--text2);text-align:center;margin-bottom:1.5rem;line-height:1.5}
+.hint{font-size:11px;color:var(--text3);text-align:center;margin-bottom:1rem}
+.sky{text-align:center;margin-bottom:6px}
+.north-star{display:inline-flex;align-items:center;gap:8px;border:1.5px dashed #7F77DD;border-radius:10px;padding:8px 18px;cursor:pointer;transition:all .15s;background:transparent}
+.north-star:hover{background:#EEEDFE}
+.ns-label{font-size:12px;font-weight:500;color:#534AB7}
+.ns-sub{font-size:10px;color:#7F77DD;margin-top:1px}
+.adc{text-align:center;font-size:11px;color:var(--text3);margin:4px 0}
+.roof-svg{display:block;width:100%;height:auto;cursor:pointer}
+.floor-stack{display:flex;flex-direction:column;gap:4px;margin-bottom:4px}
+.floor{border-radius:0;padding:11px 16px;cursor:pointer;transition:all .15s;border:0.5px solid transparent}
+.floor:hover{filter:brightness(.97)}
+.floor-inner{display:flex;align-items:center;gap:10px}
+.floor-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.floor-text{flex:1}
+.floor-title{font-size:13px;font-weight:500;line-height:1.3;margin-bottom:1px}
+.floor-sub{font-size:11px;line-height:1.35;opacity:.75}
+.floor-arrow{font-size:11px;opacity:.5}
+.foundation{border-radius:6px;padding:11px 16px;cursor:pointer;transition:all .15s;border:0.5px solid transparent}
+.foundation:hover{filter:brightness(.97)}
+.found-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.found-item{border-radius:6px;padding:8px 10px;cursor:pointer;transition:all .15s}
+.found-item:hover{filter:brightness(.97)}
+.found-title{font-size:11px;font-weight:500;margin-bottom:2px}
+.found-sub{font-size:10px;opacity:.7;line-height:1.35}
+.ground{height:6px;background:#D3D1C7;border-radius:0 0 4px 4px}
+.dp-outer{margin-top:1rem}
+.dp{border:0.5px solid var(--border);border-radius:10px;overflow:hidden}
+.dp-head{padding:11px 15px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.dp-badge{font-size:10px;font-weight:500;padding:2px 8px;border-radius:3px;display:inline-block;margin-bottom:3px}
+.dp-title{font-size:13px;font-weight:500;color:var(--text)}
+.dp-x{font-size:11px;cursor:pointer;padding:3px 8px;border:0.5px solid var(--border);border-radius:6px;background:transparent;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.dp-x:hover{color:var(--text2)}
+.dp-tabs{display:flex;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+.dp-tab{flex:1;padding:6px 4px;font-size:10px;cursor:pointer;text-align:center;background:var(--bg2);color:var(--text2);border:none;transition:all .15s;line-height:1.3}
+.dp-tab:not(:last-child){border-right:0.5px solid var(--border)}
+.dp-tab.on{background:var(--bg);color:var(--text);font-weight:500}
+.dp-body{padding:12px 15px}
+.wb{background:var(--bg2);border-left:3px solid rgba(0,0,0,.15);padding:9px 12px;border-radius:0 6px 6px 0;margin-bottom:8px}
+.wb p{font-size:12px;color:var(--text2);line-height:1.65}
+.ilist{list-style:none}
+.ilist li{font-size:12px;color:var(--text2);padding:3px 0 3px 13px;position:relative;line-height:1.5}
+.ilist li::before{content:"→";position:absolute;left:0;font-size:10px;color:var(--text3);top:4px}
+.prog-section{margin-bottom:10px}
+.prog-section:last-child{margin-bottom:0}
+.prog-period{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:3px;display:inline-block;margin-bottom:6px}
+.prog-cards{display:flex;flex-direction:column;gap:5px}
+.prog-card{border:0.5px solid var(--border);border-radius:6px;padding:8px 11px;background:var(--bg)}
+.prog-card-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:3px}
+.prog-card-day{font-size:10px;font-weight:500;flex-shrink:0;padding:1px 6px;border-radius:3px}
+.prog-card-title{font-size:12px;font-weight:500;color:var(--text);line-height:1.35}
+.prog-card-what{font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:3px}
+.prog-card-link{font-size:11px;font-style:italic;color:var(--text3);border-left:2px solid var(--border);padding-left:6px;line-height:1.4}
+.ef-box{background:var(--bg2);border-radius:6px;padding:10px 13px;margin-bottom:10px}
+.ef-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:5px}
+.ef-stat{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.ef-mech{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:6px}
+.ef-limit{font-size:11px;color:var(--text3);font-style:italic;border-left:2px solid var(--border);padding-left:8px;line-height:1.5}
+.lit-section{margin-top:10px}
+.lit-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:6px}
+.lit-cards{display:flex;flex-direction:column;gap:5px}
+.lit-card{border:0.5px solid var(--border);border-radius:6px;padding:8px 11px;background:var(--bg)}
+.lit-type{font-size:10px;font-weight:500;margin-bottom:2px}
+.lit-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px}
+.lit-desc{font-size:11px;color:var(--text2);line-height:1.4;margin-bottom:4px}
+.lit-link{font-size:11px;color:#185FA5;text-decoration:none}
+.lit-link:hover{text-decoration:underline}
+@media(max-width:500px){.found-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Визия за ученика — NWT</h1>
+<p class="sub">Как се изгражда ученикът, когото искаме да развием.<br>Четвъртият таб на всеки елемент показва ефекта върху академичния напредък и литература.</p>
+<div class="hint">Кликни върху всеки елемент от къщата</div>
+
+<div class="sky">
+  <div class="north-star" onclick="op('star')">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><polygon points="8,1 9.8,6.2 15.5,6.2 10.9,9.5 12.7,14.7 8,11.4 3.3,14.7 5.1,9.5 0.5,6.2 6.2,6.2" fill="#7F77DD"/></svg>
+    <div><div class="ns-label">"От мен зависи" — дългосрочна посока</div><div class="ns-sub">Активна роля в собствения живот</div></div>
+  </div>
+</div>
+<div class="adc">↓ строим към това</div>
+
+<svg class="roof-svg" viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" onclick="op('roof')">
+  <polygon points="200,8 380,72 20,72" fill="#EEEDFE" stroke="#7F77DD" stroke-width="1"/>
+  <text x="200" y="38" text-anchor="middle" font-size="12" font-weight="500" fill="#3C3489" font-family="Arial,sans-serif">Саморегулация и метакогниция</text>
+  <text x="200" y="54" text-anchor="middle" font-size="10" fill="#534AB7" font-family="Arial,sans-serif">Управлявам как уча — Год. 2</text>
+  <text x="370" y="68" text-anchor="middle" font-size="14" fill="#7F77DD" font-family="Arial,sans-serif">›</text>
+</svg>
+
+<div class="floor-stack">
+  <div class="floor" style="background:#EEEDFE;border-color:#AFA9EC" onclick="op('floor3')">
+    <div class="floor-inner">
+      <div class="floor-icon" style="background:#CECBF6"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="#3C3489" stroke-width="1.2"/><path d="M2 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#3C3489" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <div class="floor-text">
+        <div class="floor-title" style="color:#3C3489">Академична самоефикасност</div>
+        <div class="floor-sub" style="color:#534AB7">Вярвам, че мога да успея с усилия — Год. 1–2</div>
+      </div>
+      <div class="floor-arrow" style="color:#7F77DD">›</div>
+    </div>
+  </div>
+  <div class="floor" style="background:#F0EEFE;border-color:#AFA9EC" onclick="op('floor2')">
+    <div class="floor-inner">
+      <div class="floor-icon" style="background:#CECBF6"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10l3-3 2 2 5-5" stroke="#3C3489" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="floor-text">
+        <div class="floor-title" style="color:#3C3489">Когнитивно и емоционално ангажиране</div>
+        <div class="floor-sub" style="color:#534AB7">Мисля, свързвам, чувствам принадлежност — Год. 1</div>
+      </div>
+      <div class="floor-arrow" style="color:#7F77DD">›</div>
+    </div>
+  </div>
+  <div class="floor" style="background:#F5F3FE;border-color:#CECBF6" onclick="op('floor1')">
+    <div class="floor-inner">
+      <div class="floor-icon" style="background:#EEEDFE"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="6" rx="1" stroke="#534AB7" stroke-width="1.1"/><path d="M5 6V4a2 2 0 014 0v2" stroke="#534AB7" stroke-width="1.1"/></svg></div>
+      <div class="floor-text">
+        <div class="floor-title" style="color:#534AB7">Поведенческо ангажиране</div>
+        <div class="floor-sub" style="color:#7F77DD">На задача, участвам, довършвам — Год. 1 Сем. 1</div>
+      </div>
+      <div class="floor-arrow" style="color:#AFA9EC">›</div>
+    </div>
+  </div>
+</div>
+
+<div class="foundation" style="background:#E1F5EE;border-color:#5DCAA5" onclick="op('found')">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+    <div style="font-size:12px;font-weight:500;color:#085041">Основа — грамотност и достъп</div>
+    <div style="font-size:10px;color:#1D9E75;margin-left:auto">› кликни</div>
+  </div>
+  <div class="found-row">
+    <div class="found-item" style="background:#C8EFE0;border:0.5px solid #5DCAA5" onclick="ev(event,'found-gram')">
+      <div class="found-title" style="color:#085041">Базова и функционална грамотност</div>
+      <div class="found-sub" style="color:#0F6E56">Чета, разбирам, използвам знанието</div>
+    </div>
+    <div class="found-item" style="background:#C8EFE0;border:0.5px solid #5DCAA5" onclick="ev(event,'found-dostap')">
+      <div class="found-title" style="color:#085041">Достъп до възможности</div>
+      <div class="found-sub" style="color:#0F6E56">Значими отношения, високи очаквания</div>
+    </div>
+  </div>
+</div>
+<div class="ground"></div>
+<div class="dp-outer" id="dpo" style="display:none"><div id="dpi"></div></div>
+</div>
+
+<script>
+const D={
+  star:{badge:'"От мен зависи"',bc:'#EEEDFE',tc:'#3C3489',ac:'#7F77DD',title:'Дългосрочната посока',tabs:['Какво е','Механизъм','Програмата','Ефект и литература'],why:'Agency е способността да правиш избор и да играеш активна роля в живота — вместо да си само продукт на обстоятелствата. NWT развива фундамента — не претендира да постигне agency за две години.',mech:['Изисква самоосъзнатост, самоконтрол, социална осъзнатост, отговорност','Развива се за години, зависи от много контексти','Саморегулацията и метакогницията са ключови градивни елементи','Без грамотност и самоефикасност agency-то не може да се изгради'],prog:[{period:'Преди-ЛИ',pc:'#FAEEDA',ptc:'#633806',cards:[{day:'Асинхронно',dc:'#FAC775',dtc:'#412402',title:'Теория на бедността',what:'Участниците разбират защо agency е политически акт. Контекстът оформя agency-то на децата.',link:'Без разбиране на контекста учителят рискува да обвини ученика вместо да промени условията.'}]},{period:'ЛИ Ден 2',pc:'#FAEEDA',ptc:'#633806',cards:[{day:'Ден 2',dc:'#FAC775',dtc:'#412402',title:'ToC и VSS',what:'Участниците дефинират каквия ученик искат да развият. "От мен зависи" е явната крайна точка.',link:'Учителят с ясна визия взима различни instructional решения.'}]}],ef:{stat:'Дългосрочен outcome — не краткосрочен ефект',mech:'Agency предсказва академична персистентност и дългосрочно образователно представяне. PISA 2022: разликата в self-directed learning между ученици в уязвими и привилегировани общности е 0.44 индексни точки в България. Учениците с по-висок sense of agency имат 2-3 пъти по-висока вероятност да завършат средно образование.',limit:'Agency не се измерва краткосрочно и не е директно attributable на един учител. NWT contributes към условията — не claim-ва agency като програмен outcome.',lit:[{type:'Теория',tc:'#534AB7',bc:'#EEEDFE',title:'OECD — Student Agency (2019)',desc:'Концептуалната рамка на OECD за ученическа agency и значението й за 21-ви век.',url:'https://www.oecd.org/education/2030-project/teaching-and-learning/learning/student-agency/'},{type:'Данни',tc:'#085041',bc:'#E1F5EE',title:'PISA 2022 Bulgaria Results',desc:'Данни за разликата в self-directed learning между уязвими и привилегировани ученици.',url:'https://www.oecd.org/pisa/data/2022database/'}]}},
+  roof:{badge:'Покрив — Год. 2',bc:'#EEEDFE',tc:'#3C3489',ac:'#7F77DD',title:'Саморегулация и метакогниция',tabs:['Какво е','Механизъм','Програмата','Ефект и литература'],why:'Саморегулацията е управлението на собственото учене — планиране, мониторинг, корекция. Метакогницията е мисленето за собственото мислене. Покривът защитава всичко под него — но само ако стените са здрави.',mech:['Планиране: поставям цел и избирам стратегия преди задачата','Мониторинг: следя разбирането си в реално време','Корекция: адаптирам подхода при затруднение','Рефлексия: оценявам процеса след задачата','Изисква самоефикасност — без "мога" планирането е безсмислено'],prog:[{period:'ЛИ Ден 5',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Ден 5',dc:'#CECBF6',dtc:'#26215C',title:'Модел на урок + целеполагане',what:'Участниците учат как да вградят metacognitive moments в структурата на урока.',link:'Въведението е в Год. 1 — явна цел за ученика е Год. 2.'}]},{period:'ЛА',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Рефлексия',dc:'#CECBF6',dtc:'#26215C',title:'Рефлексия след всеки урок',what:'Участниците практикуват структурирана рефлексия — преди да я изискват от учениците.',link:'Не можеш да развиеш СРЛ у ученика, ако самият ти не го практикуваш.'}]},{period:'Год. 2',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Год. 2',dc:'#CECBF6',dtc:'#26215C',title:'Ученикът поставя под-цели',what:'Учителят въвежда структури за самостоятелно поставяне на цели и оценяване на процеса.',link:'Работи само когато ангажирането и самоефикасността вече са изградени.'}]}],ef:{stat:'EEF effect size: +7 месеца напредък (метакогниция и саморегулация)',mech:'EEF Teaching and Learning Toolkit поставя метакогницията и саморегулацията на първо място по ефективност — с effect size еквивалентен на 7 допълнителни месеца учебен напредък. Механиката: учениците, знаещи как да учат, извличат повече от всяко учебно преживяване, независимо от предмета.',limit:'Ефектът е силен при explicit instruction на стратегии — не при пасивно излагане. Учителят трябва да моделира стратегиите, а не само да ги споменава.',lit:[{type:'Ключово изследване',tc:'#085041',bc:'#E1F5EE',title:'EEF — Metacognition & Self-regulated Learning',desc:'Пълното EEF guidance report с evidence review и практически препоръки. Безплатно.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/metacognition'},{type:'Теория',tc:'#534AB7',bc:'#EEEDFE',title:'Zimmerman (2002) — Becoming a Self-Regulated Learner',desc:'Ключовата статия на Zimmerman за цикъла на саморегулацията.',url:'https://www.tandfonline.com/doi/abs/10.1207/s15430421tip4102_2'},{type:'За практиката',tc:'#633806',bc:'#FAEEDA',title:'EEF — Metacognition in the Classroom',desc:'Практически наръчник за учители. 7 препоръки с конкретни примери.',url:'https://educationendowmentfoundation.org.uk/support-for-schools/school-improvement-planning/2-develop-great-teaching/a-z-approaches/metacognition'}]}},
+  floor3:{badge:'Стена 3 — Год. 1–2',bc:'#EEEDFE',tc:'#3C3489',ac:'#7F77DD',title:'Академична самоефикасност',tabs:['Какво е','Механизъм','Програмата','Ефект и литература'],why:'Самоефикасността е вярата, че мога да успея в X с усилия. Без нея саморегулацията е безсмислена. Предметно-специфична е — развива се отделно за всеки предмет.',mech:['Bandura: mastery experience е най-силният й източник','Не идва от похвала — идва от реален успех в предизвикателна задача','Предметно-специфична — не се прехвърля автоматично между предмети','Feedback към усилието, не към резултата или таланта'],prog:[{period:'ЛИ Ден 7–8',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Ден 7',dc:'#CECBF6',dtc:'#26215C',title:'Диференциране + Feedback към процеса',what:'Задачи с правилна трудност. Feedback атрибутиращ успеха към усилие: "Успя, защото настоя."',link:'Атрибуцията определя дали mastery experience изгражда самоефикасност.'},{day:'Ден 8',dc:'#CECBF6',dtc:'#26215C',title:'ДО, МО, АО',what:'Три вида оценяване — участниците учат да дават видимост на напредъка.',link:'Видимостта на напредъка е ключов механизъм за самоефикасност.'}]},{period:'ЛА',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'ЛА',dc:'#CECBF6',dtc:'#26215C',title:'Реално преподаване',what:'Участниците виждат реален ефект и изживяват собствен mastery като учители.',link:'Учителят изгражда самоефикасност — след това може да я изгражда у учениците.'}]}],ef:{stat:'Hattie d=0.92 (self-efficacy) · EEF: +4 месеца напредък',mech:'Hattie (Visible Learning) поставя self-efficacy на едно от най-високите места сред факторите влияещи на академичното представяне. Механиката: ученик с висока самоефикасност избира по-трудни задачи, персистира по-дълго, и се възстановява по-бързо след провал. Ефектът е особено силен при ученици от уязвими общности.',limit:'Самоефикасността е domain-specific — изграденото в математика не се прехвърля в история. Всеки учител работи в своя предмет.',lit:[{type:'Ключово изследване',tc:'#085041',bc:'#E1F5EE',title:'Bandura (1994) — Self-Efficacy (резюме)',desc:'Основополагащата теория. Open-access резюме от University of Kentucky.',url:'https://www.uky.edu/~eushe2/Bandura/BanduraSelfEfficacy1994.pdf'},{type:'Мета-анализ',tc:'#534AB7',bc:'#EEEDFE',title:'Hattie — Visible Learning (self-efficacy)',desc:'Резюме на ефекта на самоефикасността от мета-анализа на Hattie.',url:'https://visible-learning.org/glossary/'},{type:'За практиката',tc:'#633806',bc:'#FAEEDA',title:'EEF — Feedback Guidance Report',desc:'Как да даваме feedback, който изгражда самоефикасност. Практически препоръки.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/feedback'}]}},
+  floor2:{badge:'Стена 2 — Год. 1',bc:'#F0EEFE',tc:'#3C3489',ac:'#7F77DD',title:'Когнитивно и емоционално ангажиране',tabs:['Какво е','Механизъм','Програмата','Ефект и литература'],why:'Когнитивното ангажиране е дълбоката обработка — свързва, прилага, задава въпроси. Емоционалното е принадлежност, интерес, безопасност. Двете са взаимозависими и са условие за самоефикасност.',mech:['Когнитивно: свързва ново с познато, прилага в нов контекст','Емоционално: чувства се прието, интересува се, гордее се','Смислените връзки развиват интерес, интересът задълбочава обработката','7C: Challenge + Clarify (когнитивно), Care + Captivate (емоционално)'],prog:[{period:'ЛИ Ден 2',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Ден 2',dc:'#CECBF6',dtc:'#26215C',title:'Наука за учене',what:'Как работи паметта, защо когнитивното предизвикателство е необходимо.',link:'Учителят, разбиращ когнитивната наука, проектира задачи с правилна трудност.'}]},{period:'ЛИ Ден 5–6',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'Ден 5',dc:'#CECBF6',dtc:'#26215C',title:'Think-aloud + модел на урок',what:'Учителят мисли на глас — моделира когнитивния процес, нормализира несигурността.',link:'"Не съм сигурен — нека помислим заедно."'},{day:'Ден 6',dc:'#CECBF6',dtc:'#26215C',title:'Изследване на ученика',what:'Диагностика на нуждите — когнитивни, емоционални, контекстуални.',link:'7C Загрижен съм: учителят, познаващ ученика, проектира по-релевантни задачи.'}]},{period:'ЛА',pc:'#EEEDFE',ptc:'#3C3489',cards:[{day:'ЛА',dc:'#CECBF6',dtc:'#26215C',title:'Реален ученически отговор',what:'Участниците виждат пряко как учениците реагират на когнитивно взискателни задачи.',link:'Най-силният learning момент за разбиране на ангажирането.'}]}],ef:{stat:'EEF: когнитивно ангажиране → +3–5 месеца напредък',mech:'Изследванията на Tripod (Ferguson et al., 2015) показват, че 7C Challenge и Clarify предсказват академични резултати независимо от демографски фактори. Емоционалното ангажиране предсказва attendance, persistence и graduation rates (Fredricks et al., 2004). Ефектът е особено силен при ученици от уязвими общности.',limit:'Ангажирането е необходимо, но не достатъчно. Без качествено съдържание и ясна цел ангажираността не води до академичен напредък.',lit:[{type:'Ключово изследване',tc:'#085041',bc:'#E1F5EE',title:'Fredricks et al. (2004) — School Engagement',desc:'Фундаменталната статия за трите вида ангажиране и връзката им с академичните резултати.',url:'https://journals.sagepub.com/doi/10.3102/00346543074001059'},{type:'Tripod данни',tc:'#534AB7',bc:'#EEEDFE',title:'Ferguson (2012) — Tripod 7C Framework',desc:'Валидацията на 7C рамката и предсказателната й сила за академични резултати.',url:'https://www.tripoded.com/research'},{type:'За практиката',tc:'#633806',bc:'#FAEEDA',title:'EEF — Behaviour in Schools',desc:'Как климатът и ангажирането се свързват с академичния напредък.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/behaviour'}]}},
+  floor1:{badge:'Стена 1 — Год. 1 Сем. 1',bc:'#F5F3FE',tc:'#534AB7',ac:'#AFA9EC',title:'Поведенческо ангажиране',tabs:['Какво е','Механизъм','Програмата','Ефект и литература'],why:'Поведенческото ангажиране е видимото — на задача, участва, довършва. Първата стена: без нея нищо по-горе не може да се изгради.',mech:['Observable: менторът го вижда при посещение без survey','Необходимо условие: не можеш да мислиш дълбоко ако не участваш','Зависи от психологическата безопасност','Водещ индикатор в Год. 1 Сем. 1'],prog:[{period:'Преди-ЛИ',pc:'#F5F3FE',ptc:'#534AB7',cards:[{day:'Асинхронно',dc:'#EEEDFE',dtc:'#26215C',title:'Tripod + видеоурок',what:'7C рамката въведена. Наблюдение на реален час с протокол.',link:'Учат се да виждат ангажирането преди да го проектират.'}]},{period:'ЛИ Ден 1 + 4–5',pc:'#F5F3FE',ptc:'#534AB7',cards:[{day:'Ден 1',dc:'#EEEDFE',dtc:'#26215C',title:'Нормиране + К групи',what:'Участниците изживяват безопасност — преди да я създадат в класната стая.',link:'Учителят не може да създаде безопасност, ако сам не я е преживял.'},{day:'Ден 4–5',dc:'#EEEDFE',dtc:'#26215C',title:'КУ + Ясна цел',what:'CFU техники и success criteria — структурирано участие за всички.',link:'Без ясна цел ученикът не знае дали е на задача или не.'}]},{period:'ЛА',pc:'#F5F3FE',ptc:'#534AB7',cards:[{day:'ЛА',dc:'#EEEDFE',dtc:'#26215C',title:'6 реални урока',what:'Deliberate practice с feedback фокусиран върху поведенческото ангажиране.',link:'Единственият начин да автоматизираш управлението на класа.'}]}],ef:{stat:'Time-on-task корелира r=0.38 с академично представяне',mech:'Meta-анализите показват, че увеличаването на academic learning time (ALT) е един от най-устойчивите предиктори за академичен напредък. Управлението на класа е основният лост за поведенческо ангажиране. Ефектът е особено силен в четене и математика.',limit:'Поведенческото ангажиране е необходимо, но не достатъчно. Ученик "на задача" при ниско когнитивно изискване не напредва значително.',lit:[{type:'Мета-анализ',tc:'#085041',bc:'#E1F5EE',title:'EEF — Behaviour in Schools Guidance',desc:'Evidence review на ефекта на classroom management върху академичните резултати.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/behaviour'},{type:'За практиката',tc:'#534AB7',bc:'#EEEDFE',title:'Rosenshine — Principles of Instruction',desc:'10 evidence-based принципа за ефективно преподаване. Open access.',url:'https://www.aft.org/sites/default/files/Rosenshine.pdf'}]}},
+  found:{badge:'Основа',bc:'#E1F5EE',tc:'#085041',ac:'#1D9E75',title:'Грамотност и достъп — основата на всичко',tabs:['Защо е основата','Двата елемента','Програмата','Ефект и литература'],why:'Без основа стените се срутват. Ученик без достъп до значими отношения и без базова грамотност няма условия за нито едно от нивата над него.',mech:['Базова грамотност: декодиране и разбиране — предпоставка','Функционална грамотност: използвам знанието в реални ситуации','Достъп: значими отношения, предизвикателни задачи, подкрепа','20% от децата в България имат различен майчин език'],prog:[{period:'Преди-ЛИ',pc:'#E1F5EE',ptc:'#085041',cards:[{day:'Асинхронно',dc:'#9FE1CB',dtc:'#04342C',title:'PISA анализи',what:'77% от учениците в уязвими общности под базовото ниво по математика.',link:'Учителят приема грамотността като своя отговорност — не само на учителя по БЕЛ.'}]},{period:'ЛИ Ден 3 + 6',pc:'#E1F5EE',ptc:'#085041',cards:[{day:'Ден 3',dc:'#9FE1CB',dtc:'#04342C',title:'VSS — Визия за ученика',what:'Функционална грамотност като измерима цел.',link:'VSS превръща "грамотен ученик" в наблюдаем критерий.'},{day:'Ден 6',dc:'#9FE1CB',dtc:'#04342C',title:'Explicit literacy instruction',what:'Речников мост, езиково производство, структурирано четене в предмета.',link:'Всеки NWT учител е и учител по грамотност в своя предмет.'}]}],ef:{stat:'EEF: literacy interventions → +4–6 месеца напредък',mech:'Literacy е основополагащ фактор за академичен успех в ВСИЧКИ предмети. PISA 2022: четивната компетентност предсказва представянето по математика и науки по-силно от социоикономическия статус при ученици от уязвими общности. Boulware-Gooden et al. (2007): explicit reading instruction → 20% подобрение за 5 седмици.',limit:'Ефектът е силен при explicit instruction — не при пасивно излагане на текст. Учителят трябва активно да преподава стратегии за работа с текст.',lit:[{type:'Ключово изследване',tc:'#085041',bc:'#E1F5EE',title:'EEF — Improving Literacy in Secondary Schools',desc:'Guidance report с 6 препоръки за literacy instruction в предметните часове. Безплатно.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/literacy-ks3-ks4'},{type:'Изследване',tc:'#534AB7',bc:'#EEEDFE',title:'Boulware-Gooden et al. (2007)',desc:'Metacognitive reading strategies и 20% подобрение в разбирането за 5 седмици.',url:'https://www.readingrockets.org/topics/comprehension/articles/instruction-metacognitive-strategies-enhances-reading-comprehension-and'},{type:'Данни',tc:'#633806',bc:'#FAEEDA',title:'PISA 2022 — Reading Framework',desc:'Как PISA дефинира и измерва четивна компетентност.',url:'https://www.oecd.org/pisa/pisaproducts/pisa2022-assessment-analytical-framework.htm'}]}},
+  'found-gram':{badge:'Базова и функционална грамотност',bc:'#E1F5EE',tc:'#085041',ac:'#1D9E75',title:'Чета, разбирам, използвам знанието',tabs:['Какво е','Нивата','Програмата','Ефект и литература'],why:'Грамотността не е само четене — тя е способността да използваш писмения език за учене, мислене и участие. Базовата е предпоставката, функционалната е целта.',mech:['Базова: декодиране + разбиране на буквалното значение (PIRLS)','Функционална: прилагане в реални ситуации (PISA)','Предметна: всеки предмет има свой жанр','Без основа когнитивният ресурс отива в декодиране вместо в мислене'],prog:[{period:'ЛИ Ден 6 + ЛА',pc:'#E1F5EE',ptc:'#085041',cards:[{day:'Ден 6',dc:'#9FE1CB',dtc:'#04342C',title:'Explicit literacy момент',what:'Речников мост + езиково производство + структурирано резюме в предметния урок.',link:'Приложимо в биология, история, математика — не само по БЕЛ.'},{day:'ЛА',dc:'#9FE1CB',dtc:'#04342C',title:'Реален урок с ученици',what:'Прилагане с реална ученическа обратна връзка.',link:'ЛА е единственото място с реален ученически feedback.'}]}],ef:{stat:'Vocabulary instruction → +3–4 месеца · Reading comprehension → +4 месеца (EEF)',mech:'EEF Toolkit: explicit vocabulary instruction е един от най-ефективните методи. Boulware-Gooden et al.: семантично webbing на речника → 40% по-голям ефект от стандартно преписване на дефиниции. Четивните стратегии са особено ефективни при ученици, четящи под нивото — именно целевата група на NWT.',limit:'Ефектът зависи от последователност и обем. Единичен literacy момент на урок е по-малко ефективен от систематичен подход.',lit:[{type:'За практиката',tc:'#085041',bc:'#E1F5EE',title:'EEF — Improving Literacy KS2 Guidance',desc:'7 препоръки за literacy instruction. Включва vocabulary и comprehension strategies.',url:'https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/literacy-ks2'},{type:'Изследване',tc:'#534AB7',bc:'#EEEDFE',title:'Boulware-Gooden et al. (2007)',desc:'Metacognitive reading instruction: 20% comprehension gains, 40% vocabulary gains.',url:'https://www.readingrockets.org/topics/comprehension/articles/instruction-metacognitive-strategies-enhances-reading-comprehension-and'}]}},
+  'found-dostap':{badge:'Достъп до възможности',bc:'#E1F5EE',tc:'#085041',ac:'#1D9E75',title:'Значими отношения и високи очаквания',tabs:['Какво е','Защо е в основата','Програмата','Ефект и литература'],why:'Достъпът не е само физически — той е психологически. Ученик без значими отношения и без предизвикателни задачи е ученик без условия за развитие.',mech:['Значими отношения: учителят познава ученика като личност','Високи очаквания: вярвам, че ТИ можеш','Предизвикателни задачи: достъп до когнитивно богато преживяване','7C Загрижен съм + Предизвиквам = достъпът в действие'],prog:[{period:'Преди-ЛИ + Ден 1',pc:'#E1F5EE',ptc:'#085041',cards:[{day:'Преди-ЛИ',dc:'#9FE1CB',dtc:'#04342C',title:'Теория на бедността',what:'Контекстът ограничава достъпа — учителят може да е countervailing force.',link:'Учителят с висока загриженост и високи очаквания е най-мощният фактор за достъп.'},{day:'Ден 1',dc:'#9FE1CB',dtc:'#04342C',title:'7C Загрижен съм',what:'Загрижеността е instructional компетентност — наблюдаема и измерима.',link:'7C Care items: "Учителят ми наистина го е грижа за мен."'}]},{period:'ЛИ Ден 3',pc:'#E1F5EE',ptc:'#085041',cards:[{day:'Ден 3',dc:'#9FE1CB',dtc:'#04342C',title:'Визия за класа',what:'Конкретна визия за класна стая с реален достъп за всяко дете.',link:'Визията превръща "висока загриженост" в ежедневни решения.'}]}],ef:{stat:'Teacher-student relationship → d=0.52 (Hattie) · Pygmalion effect: +4–8 IQ точки',mech:'Roorda et al. (2017) мета-анализ: качеството на учител-ученик отношението обяснява 35% от вариацията в академичното ангажиране. Pygmalion effect: учениците, от които учителите очакват повече, постигат значително по-добри резултати независимо от начални способности. Ефектът е 2–3 пъти по-силен при ученици от уязвими общности.',limit:'Високите очаквания без подкрепа водят до тревожност. Трябва да е комбинирано с диференциране и mastery-designed tasks.',lit:[{type:'Мета-анализ',tc:'#085041',bc:'#E1F5EE',title:'Roorda et al. (2017) — Teacher-Student Relationships',desc:'Мета-анализ на 99 изследвания: връзката учител-ученик и академичното ангажиране.',url:'https://doi.org/10.3102/0034654311421793'},{type:'Класически текст',tc:'#534AB7',bc:'#EEEDFE',title:'Rosenthal & Jacobson — Pygmalion in the Classroom',desc:'Фундаменталното изследване за ефекта на учителските очаквания.',url:'https://www.jstor.org/stable/1161159'},{type:'За практиката',tc:'#633806',bc:'#FAEEDA',title:'EEF — PISA in Focus: Teacher-Student Relations',desc:'Как отношенията учител-ученик влияят на академичните резултати.',url:'https://www.oecd-ilibrary.org/education/pisa-in-focus_22260919'}]}
+  }
+};
+let cur=null,curTab=0;
+function ev(e,k){e.stopPropagation();op(k);}
+function op(k){cur=k;curTab=0;render();}
+function render(){
+  const d=D[cur];if(!d)return;
+  const tabs=d.tabs.map((t,i)=>`<button class="dp-tab${i===curTab?' on':''}" onclick="st(${i})">${t}</button>`).join('');
+  let body='';
+  if(curTab===0){body=`<div class="wb"><p>${d.why}</p></div>`;}
+  else if(curTab===1){body=`<ul class="ilist">${d.mech.map(m=>`<li>${m}</li>`).join('')}</ul>`;}
+  else if(curTab===2){body=d.prog.map(sec=>`<div class="prog-section"><span class="prog-period" style="background:${sec.pc};color:${sec.ptc}">${sec.period}</span><div class="prog-cards">${sec.cards.map(c=>`<div class="prog-card"><div class="prog-card-head"><span class="prog-card-day" style="background:${c.dc};color:${c.dtc}">${c.day}</span><div class="prog-card-title">${c.title}</div></div><div class="prog-card-what">${c.what}</div><div class="prog-card-link">${c.link}</div></div>`).join('')}</div></div>`).join('');}
+  else{const e=d.ef;const lit=e.lit.map(l=>`<div class="lit-card"><div class="lit-type" style="color:${l.tc}">${l.type}</div><div class="lit-title">${l.title}</div><div class="lit-desc">${l.desc}</div><a class="lit-link" href="${l.url}" target="_blank">Отвори →</a></div>`).join('');body=`<div class="ef-box"><div class="ef-label">Ефект върху академичния напредък</div><div class="ef-stat">${e.stat}</div><div class="ef-mech">${e.mech}</div><div class="ef-limit">${e.limit}</div></div><div class="lit-section"><div class="lit-label">Литература и ресурси</div><div class="lit-cards">${lit}</div></div>`;}
+  document.getElementById('dpi').innerHTML=`<div class="dp"><div class="dp-head" style="background:${d.bc}"><div><span class="dp-badge" style="background:${d.ac}20;color:${d.tc}">${d.badge}</span><div class="dp-title">${d.title}</div></div><button class="dp-x" onclick="cls()">затвори</button></div><div class="dp-tabs">${tabs}</div><div class="dp-body">${body}</div></div>`;
+  document.getElementById('dpo').style.display='block';
+  setTimeout(()=>document.getElementById('dpo').scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+function st(i){curTab=i;render();}
+function cls(){document.getElementById('dpo').style.display='none';cur=null;}
+</script>
+</body>
+</html>
